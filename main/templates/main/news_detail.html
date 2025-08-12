@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Sarlavha va meta ma'lumotlar -->
+    <div class="mb-10 text-center">
+        <div class="mb-4">
+            {% if news.category %}
+            <a href="{% url 'news_by_category' news.category.slug %}" class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-medium hover:bg-blue-100 transition duration-300">
+                {{ news.category.name }}
+            </a>
+            {% endif %}
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">{{ news.title }}</h1>
+        <div class="flex flex-wrap justify-center items-center text-gray-500 gap-4">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>{{ news.created_at|date:"d F Y, H:i" }}</span>
+            </div>
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                <span>{{ news.views }} ta ko'rish</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asosiy kontent -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-10">
+        <!-- Galereya qismi -->
+        {% if news.images.all %}
+        <div class="relative group">
+            <div class="swiper-container gallery-slider">
+                <div class="swiper-wrapper">
+                    <!-- Asosiy rasm -->
+                    <div class="swiper-slide relative">
+                        <img src="{{ news.image.url }}" alt="{{ news.title }}" 
+                             class="w-full h-[32rem] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
+                    </div>
+                    <!-- Qo'shimcha rasmlar -->
+                    {% for image in news.images.all %}
+                    <div class="swiper-slide relative">
+                        <img src="{{ image.image.url }}" alt="{{ news.title }} - {{ forloop.counter }}" 
+                             class="w-full h-[32rem] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Navigation buttons -->
+                <div class="swiper-button-next opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                <div class="swiper-button-prev opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                <!-- Pagination -->
+                <div class="swiper-pagination !bottom-8"></div>
+            </div>
+        </div>
+        {% elif news.image %}
+        <div class="relative h-[32rem] overflow-hidden group">
+            <img src="{{ news.image.url }}" alt="{{ news.title }}" 
+                 class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div>
+        {% endif %}
+
+        <!-- Yangilik matni -->
+        <div class="p-6 md:p-10">
+            <article class="prose max-w-none prose-lg">
+                <div class="prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-img:rounded-xl prose-img:shadow-lg prose-img:mx-auto">
+                    {{ news.content|safe }}
+                </div>
+            </article>
+
+            <!-- Social media ulashish -->
+            <div class="mt-12 pt-8 border-t border-gray-100">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+                    <!-- Teglar -->
+                    {% if news.tags.all %}
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-500 mb-3">Teglar:</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for tag in news.tags.all %}
+                            <a href="{% url 'news_by_tag' tag.slug %}" class="px-3 py-1.5 bg-gray-100 text-gray-800 text-sm rounded-full hover:bg-gray-200 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                </svg>
+                                {{ tag.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Ulashish tugmalari -->
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-gray-500">Ulashish:</span>
+                        <a href="#" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition transform hover:-translate-y-1">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-blue-400 text-white flex items-center justify-center hover:bg-blue-500 transition transform hover:-translate-y-1">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.195 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition transform hover:-translate-y-1">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orqaga qaytish tugmasi -->
+    <div class="mt-8 text-center">
+        <a href="{% url 'news_list' %}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            Barcha yangiliklarni ko'rish
+        </a>
+    </div>
+
+    <!-- Tavsiya etilgan yangiliklar -->
+    {% if related_news %}
+    <div class="mt-16">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Tavsiya etilgan yangiliklar</h2>
+            <a href="{% url 'news_list' %}" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                Barchasi
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for item in related_news %}
+            <a href="{% url 'news_detail' item.pk %}" class="group">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transition duration-300 group-hover:shadow-xl h-full flex flex-col">
+                    {% if item.image %}
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}" 
+                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                    </div>
+                    {% endif %}
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-xl text-gray-900 mb-3 group-hover:text-blue-600 transition">{{ item.title }}</h3>
+                            <p class="text-gray-500 text-sm mb-4">{{ item.created_at|date:"d F Y" }}</p>
+                        </div>
+                        <div class="flex items-center text-blue-600 font-medium">
+                            <span>Batafsil</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Swiper JS va Fancybox uchun kerakli scriptlar -->
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+<script>
+    // Slider ishlatish
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if news.images.all %}
+        const swiper = new Swiper('.gallery-slider', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                renderBullet: function (index, className) {
+                    return '<span class="' + className + ' !w-2.5 !h-2.5 !mx-1.5 !bg-white/80 hover:!bg-white"></span>';
+                },
+            },
+        });
+        {% endif %}
+
+        // Fancybox ishlatish
+        Fancybox.bind("[data-fancybox]", {
+            Thumbs: {
+                type: "classic",
+            },
+            Toolbar: {
+                display: {
+                    left: [],
+                    middle: [],
+                    right: ["close"],
+                },
+            },
+        });
+    });
+</script>
+
+<style>
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .swiper-button-next, .swiper-button-prev {
+        color: white;
+        background: rgba(0,0,0,0.3);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        backdrop-filter: blur(4px);
+        transition: all 0.3s ease;
+    }
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+        background: rgba(0,0,0,0.5);
+        transform: scale(1.1);
+    }
+    .swiper-button-next:after, .swiper-button-prev:after {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .prose {
+        max-width: 100%;
+    }
+    .prose img {
+        max-height: 500px;
+        width: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+{% endblock %}

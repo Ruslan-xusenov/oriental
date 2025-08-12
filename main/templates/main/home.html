@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Hero Section with Particles -->
+<section class="relative bg-gradient-to-br from-blue-900 to-indigo-800 text-white py-20 md:py-32 overflow-hidden">
+    <!-- Particles Background -->
+    <div id="particles-js" class="absolute inset-0 opacity-30"></div>
+    
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="max-w-3xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fadeIn">Oriental Universiteti</h1>
+            <p class="text-xl md:text-2xl text-blue-100 opacity-90 mb-8 animate-fadeIn animation-delay-100">
+                Xalqaro standartdagi ta'lim va innovatsion tadqiqotlar markazi
+            </p>
+            <div class="w-40 h-1.5 bg-gradient-to-r from-blue-400 to-indigo-300 mx-auto mb-8 rounded-full animate-slideIn"></div>
+            
+            <!-- In your hero section -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#countries" class="scroll-button px-6 py-3 bg-white text-blue-800 font-medium rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300">
+                    O'quv joylari
+                </a>
+                <a href="#news" class="scroll-button px-6 py-3 border-2 border-white text-white font-medium rounded-full hover:bg-white/10 transition-all duration-300">
+                    Yangiliklar
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Animated Waves -->
+    <div class="absolute bottom-0 left-0 right-0 overflow-hidden h-20">
+        <svg class="absolute bottom-0 left-0 w-[200%] animate-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="rgba(255,255,255,0.1)" d="M0,256L48,261.3C96,267,192,277,288,250.7C384,224,480,160,576,160C672,160,768,224,864,218.7C960,213,1056,139,1152,117.3C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Countries Section -->
+<section id="countries" class="py-16 max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Davlatlararo o'quv joylari</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Dunyoning 20+ davlatidagi hamkor o'quv muassasalari
+        </p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for c in countries %}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-500 transform hover:-translate-y-2 group">
+            <div class="relative h-48 bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
+                {% if c.flag_url %}
+                    <img src="{{ c.flag_url }}" alt="{{ c.name }}" class="w-32 h-auto object-contain transition duration-500 group-hover:scale-110">
+                {% else %}
+                    <div class="text-5xl text-blue-400">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                {% endif %}
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            </div>
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ c.name }}</h3>
+                <div class="flex items-center text-blue-600">
+                    <span class="text-sm font-medium">{{ c.institution_count }} ta o'quv joyi</span>
+                    <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- News Section -->
+<section id="news" class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+            <div class="mb-6 md:mb-0">
+                <h2 class="text-3xl font-bold text-gray-800">So'nggi Yangiliklar</h2>
+                <p class="text-gray-600">Universitet hayotidagi eng muhim voqealar</p>
+            </div>
+            <a href="{% url 'news_list' %}" class="flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                Barcha yangiliklar
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for item in latest_news %}
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-500 transform hover:-translate-y-2">
+                {% if item.image_url %}
+                <div class="relative h-48 overflow-hidden">
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+                    <div class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        {{ item.category|default:"Yangilik" }}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="p-6">
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <i class="far fa-calendar-alt mr-2"></i>
+                        {{ item.created_at|date:"d F Y" }}
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ item.title }}</h3>
+                    <p class="text-gray-600 mb-4">{{ item.content|truncatewords:20 }}</p>
+                    <a href="{% url 'news_detail' item.pk %}" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                        Batafsil
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="p-6">
+                <div class="text-4xl font-bold mb-2 animate-count" data-target="25">0</div>
+                <div class="text-lg">Yillik tajriba</div>
+            </div>
+            <div class="p-6">
+                <div class="text-4xl font-bold mb-2 animate-count" data-target="50">0</div>
+                <div class="text-lg">Ta'lim yo'nalishlari</div>
+            </div>
+            <div class="p-6">
+                <div class="text-4xl font-bold mb-2 animate-count" data-target="100">0</div>
+                <div class="text-lg">Professorlar</div>
+            </div>
+            <div class="p-6">
+                <div class="text-4xl font-bold mb-2 animate-count" data-target="20">0</div>
+                <div class="text-lg">Hamkor davlatlar</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript Libraries -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+    /* Smooth scroll behavior for whole page */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2563eb;
+    }
+    
+    /* Animation for sections */
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+    }
+    
+    /* Button hover effects */
+    .scroll-button {
+        transition: all 0.3s ease;
+    }
+    
+    .scroll-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Add smooth scroll animation
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100, // Adjust offset as needed
+                    behavior: 'smooth'
+                });
+                
+                // Add focus to the target section for accessibility
+                setTimeout(() => {
+                    targetElement.setAttribute('tabindex', '-1');
+                    targetElement.focus();
+                }, 1000);
+            }
+        });
+    });
+    
+    // Optional: Add scroll animation class when elements come into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in-up');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+});
+</script>
+
+{% endblock %}

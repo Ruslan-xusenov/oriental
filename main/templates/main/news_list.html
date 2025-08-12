@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Sarlavha va filtrlar -->
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Yangiliklar</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Bizning so'nggi yangiliklar, tadbirlar va e'lonlar to'plami</p>
+        
+        <!-- Filtrlar -->
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-all">
+                Barchasi
+            </button>
+            {% for category in categories %}
+            <button class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition-all">
+                {{ category.name }}
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Yangiliklar kartalari -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for item in news_items %}
+        <article class="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100">
+            <!-- Rasm qismi -->
+            {% if item.image %}
+            <div class="relative h-56 overflow-hidden">
+                <img src="{{ item.image.url }}" alt="{{ item.title }}" 
+                     class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                
+                <!-- Kategoriya yorlig'i -->
+                {% if item.category %}
+                <span class="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full shadow-sm">
+                    {{ item.category.name }}
+                </span>
+                {% endif %}
+                
+                <!-- Sana yorlig'i -->
+                <span class="absolute bottom-4 left-4 px-3 py-1 bg-white/90 text-gray-800 text-xs font-medium rounded-full shadow-sm flex items-center">
+                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    {{ item.created_at|date:"d.m.Y" }}
+                </span>
+            </div>
+            {% endif %}
+            
+            <!-- Kontent qismi -->
+            <div class="p-6 flex flex-col flex-grow">
+                <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition duration-300">
+                    <a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a>
+                </h2>
+                
+                <p class="text-gray-600 mb-4 line-clamp-3 flex-grow">
+                    {{ item.content|striptags|truncatewords:25 }}
+                </p>
+                
+                <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                    <div class="flex items-center">
+                        {% if item.author.avatar %}
+                        <img src="{{ item.author.avatar.url }}" alt="{{ item.author.get_full_name }}" class="w-8 h-8 rounded-full mr-2 object-cover">
+                        {% else %}
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-medium mr-2">
+                            {{ item.author.get_full_name|first|upper }}
+                        </div>
+                        {% endif %}
+                        <span class="text-sm text-gray-600">{{ item.author.get_full_name }}</span>
+                    </div>
+                    
+                    <a href="{% url 'news_detail' item.pk %}" class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800 transition duration-300">
+                        Batafsil
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transform transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="mt-12 flex justify-center">
+        <nav class="flex items-center space-x-2">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition flex items-center">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Oldingi
+            </a>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <span class="px-4 py-2 border border-blue-500 bg-blue-500 text-white rounded-md shadow-sm">
+                {{ num }}
+            </span>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?page={{ num }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">
+                {{ num }}
+            </a>
+            {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition flex items-center">
+                Keyingi
+                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

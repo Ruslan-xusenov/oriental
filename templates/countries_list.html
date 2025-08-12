@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-center text-blue-700">Hamkor Davlatlarimizdagi uquv joylari haqida tavsilot</h1>
+
+    {% if countries %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {% for country in countries %}
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                {% if country.get_flag %}
+                    <img src="{{ country.get_flag }}" alt="{{ country.name }}" class="w-full h-40 object-cover">
+                {% else %}
+                    <div class="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-500 text-lg">
+                        Hali hech qanday hamkor Davlat kiritilmagan
+                    </div>
+                {% endif %}
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold text-gray-800">{{ country.name }}</h2>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-gray-500">Hozircha davlat kiritilmagan.</p>
+    {% endif %}
+</div>
+{% endblock %}

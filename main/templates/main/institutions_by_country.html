@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ country.name }} - O'quv Joylari</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .institutions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .institution-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .institution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .institution-name {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .institution-name:hover {
+            text-decoration: underline;
+        }
+        
+        .institution-description {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        
+        .advantages {
+            background-color: #f0f8ff;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .advantages-title {
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .empty-message {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 2rem;
+            color: #777;
+            font-size: 1.2rem;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--dark-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #1a252f;
+        }
+        
+        @media (max-width: 768px) {
+            .institutions-list {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ country.name }}dagi O'quv Joylari</h1>
+    </header>
+
+    <ul class="institutions-list">
+        {% for inst in institutions %}
+            <li class="institution-card">
+                <a href="{% url 'institution_detail' inst.pk %}" class="institution-name">{{ inst.name }}</a>
+                <div class="institution-description">{{ inst.description|linebreaks }}</div>
+                {% if inst.advantages %}
+                    <div class="advantages">
+                        <span class="advantages-title">Afzalliklari:</span> {{ inst.advantages }}
+                    </div>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li class="empty-message">Hech qanday o'quv joyi topilmadi.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'countries_list' %}" class="back-button">Davlatlar Ro'yxatiga Qaytish</a>
+</body>
+</html>

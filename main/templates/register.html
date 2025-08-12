@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800">
+  <div class="max-w-md w-full mx-4 bg-white/10 backdrop-blur-lg p-10 rounded-2xl shadow-2xl border border-white/20">
+    <div class="text-center mb-10">
+      <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+        </svg>
+      </div>
+      <h2 class="mt-6 text-3xl font-extrabold text-white tracking-tight">Ro'yxatdan o'tish</h2>
+      <p class="mt-2 text-sm text-white/80">Premium hisob yarating</p>
+    </div>
+
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      
+      {% for field in form %}
+      <div>
+        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-white/90 mb-1">
+          {{ field.label }}
+          {% if field.field.required %}<span class="text-red-400">*</span>{% endif %}
+        </label>
+        <div class="relative">
+          {{ field }}
+          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-white/50">
+            {% if field.name == "username" %}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+            {% elif field.name == "email" %}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              </svg>
+            {% elif "password" in field.name %}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+              </svg>
+            {% endif %}
+          </div>
+        </div>
+        {% if field.help_text %}
+          <p class="mt-1 text-xs text-white/60">{{ field.help_text }}</p>
+        {% endif %}
+        {% for error in field.errors %}
+          <p class="mt-1 text-xs text-rose-300">{{ error }}</p>
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="group relative w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl font-medium text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/70 group-hover:text-white" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+          </svg>
+        </span>
+        Ro'yxatdan o'tish
+      </button>
+    </form>
+
+    <div class="mt-8 text-center">
+      <p class="text-sm text-white/70">
+        Hisobingiz bormi?
+        <a href="{% url 'login' %}" class="font-medium text-white hover:text-indigo-200 transition-colors duration-200">Tizimga kirish</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  input, select {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 0.75rem !important;
+    width: 100% !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  input:focus, select:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.5) !important;
+    border-color: rgba(165, 180, 252, 0.8) !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  
+  input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+</style>
+{% endblock %}

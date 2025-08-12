@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-green-50 to-blue-50">
+    <div class="max-w-md w-full p-10 bg-white rounded-2xl shadow-2xl border border-gray-100
+                hover:shadow-3xl transition-all duration-500 ease-in-out transform hover:-translate-y-2
+                relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-40 h-40 bg-green-100 rounded-full opacity-20 animate-float"></div>
+        <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-blue-100 rounded-full opacity-20 animate-float delay-2000"></div>
+        
+        <div class="flex items-center justify-center w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white
+                    transition-all duration-500 ease-in-out transform hover:scale-110
+                    animate-pulse-slow shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+
+        <div class="text-center space-y-4 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2
+                       animate-fadeIn">Xabar muvaffaqiyatli yuborildi!</h2>
+            <p class="text-lg text-gray-600 mb-6
+                      animate-fadeIn animation-delay-200">Rahmat! Tez orada siz bilan bog'lanamiz.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+                <a href="{% url 'contact' %}" id="sparkleBtn" 
+                   class="relative inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 
+                          text-white font-medium rounded-xl shadow-lg hover:shadow-xl
+                          transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)]
+                          transform hover:scale-105 overflow-hidden
+                          sparkle-button">
+                    <span class="relative z-10">Yana xabar yuborish</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                </a>
+                
+                <a href="{% url 'home' %}" 
+                   class="inline-flex items-center justify-center px-8 py-3 border-2 border-green-500 text-green-600 hover:bg-green-50 
+                          font-medium rounded-xl shadow-sm hover:shadow-md
+                          transition-all duration-300 ease-in-out
+                          transform hover:scale-105">
+                    Bosh sahifaga qaytish
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0" id="confetti-container"></div>
+    </div>
+</div>
+
+<style>
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.5);
+  }
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(0);
+  }
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.delay-2000 {
+  animation-delay: 2s;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.sparkle-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.sparkle-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg);
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+
+.sparkle-button:hover::before {
+  left: 100%;
+}
+
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkle-fade 700ms forwards;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  filter: brightness(1.2);
+}
+
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  animation: confetti-fall linear forwards;
+  z-index: 1;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('sparkleBtn');
+  const btnWidth = btn.offsetWidth;
+  const btnHeight = btn.offsetHeight;
+
+  const colors = [
+    '#00d8ff', '#6aff8c', '#ff4d6d', 
+    '#ffd700', '#bf80ff', '#00ffea',
+    '#ff9e00', '#ff6bff', '#00ff9d'
+  ];
+
+  const shapes = ['circle', 'rect', 'polygon'];
+  
+  for (let i = 0; i < 8; i++) {
+    createSparkle(btn, btnWidth, btnHeight);
+  }
+  
+  setInterval(() => {
+    createSparkle(btn, btnWidth, btnHeight);
+  }, 300);
+
+  function createSparkle(parent, width, height) {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    sparkle.style.backgroundColor = color;
+
+    const size = Math.random() * 8 + 4 + 'px';
+    sparkle.style.width = size;
+    sparkle.style.height = size;
+
+    const posX = (Math.random() * (width + 40)) - 20;
+    const posY = (Math.random() * (height + 40)) - 20;
+
+    sparkle.style.left = posX + 'px';
+    sparkle.style.top = posY + 'px';
+
+    const offsetX = (Math.random() - 0.5) * 60 + 'px';
+    const offsetY = (Math.random() - 0.5) * 60 + 'px';
+
+    sparkle.style.setProperty('--x', offsetX);
+    sparkle.style.setProperty('--y', offsetY);
+
+    if (Math.random() > 0.7) {
+      sparkle.style.borderRadius = '0';
+      sparkle.style.transform = `rotate(${Math.random() * 360}deg)`;
+    }
+
+    parent.appendChild(sparkle);
+
+    sparkle.addEventListener('animationend', () => {
+      sparkle.remove();
+    });
+  }
+
+  const confettiContainer = document.getElementById('confetti-container');
+  const confettiColors = [
+    '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', 
+    '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50',
+    '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800'
+  ];
+
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    
+    const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+    const size = Math.random() * 10 + 5;
+    const left = Math.random() * 100;
+    const animationDuration = Math.random() * 3 + 2;
+    const delay = Math.random() * 5;
+    
+    confetti.style.backgroundColor = color;
+    confetti.style.width = `${size}px`;
+    confetti.style.height = `${size}px`;
+    confetti.style.left = `${left}%`;
+    confetti.style.animationDuration = `${animationDuration}s`;
+    confetti.style.animationDelay = `${delay}s`;
+    
+    if (Math.random() > 0.5) {
+      confetti.style.borderRadius = '0';
+      confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    }
+    
+    confettiContainer.appendChild(confetti);
+    
+    confetti.addEventListener('animationend', () => {
+      confetti.remove();
+    });
+  }
+
+  for (let i = 0; i < 50; i++) {
+    createConfetti();
+  }
+  
+  setInterval(() => {
+    if (Math.random() > 0.7) {
+      createConfetti();
+    }
+  }, 300);
+});
+</script>
+{% endblock %}

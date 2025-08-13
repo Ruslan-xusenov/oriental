@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="uz" class="scroll-smooth">
 <head>
@@ -67,9 +69,7 @@
     <header class="header-bg text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
             <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-blue-900 font-bold text-xl floating">
-                    OU
-                </div>
+                <img src="{% static 'images/logo.jpg' %}" alt="Oriental Universiteti" class="w-10 h-10 rounded-full object-cover">                
                 <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-200">
                     Oriental Universiteti
                 </h1>

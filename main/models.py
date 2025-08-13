@@ -40,6 +40,7 @@ class ContactMessage(models.Model):
 class News(models.Model):
     title = models.CharField(max_length=200, verbose_name="Sarlavha")
     content = models.TextField(verbose_name="Matn")
+    image = models.ImageField(upload_to='news/', blank=True, null=True, verbose_name="Rasm")
     image_url = models.URLField(blank=True, null=True, verbose_name="Rasm URL")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan sana")
 

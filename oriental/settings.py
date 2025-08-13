@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-)%irus#8m9(2-qw$f2rq^r05bx=1p(ox_q1x)f5u%@js$ems&t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+# settings.py ga qo'shimcha sozlamalar
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
 
 
 # Application definition
@@ -40,7 +46,6 @@ INSTALLED_APPS = [
     'main',
     'corsheaders',
     'widget_tweaks',
-    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'oriental.urls'
@@ -119,21 +125,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = "DENY"
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
@@ -143,12 +142,10 @@ EMAIL_HOST_USER = "qabuloriental@gmail.com"
 EMAIL_HOST_PASSWORD = "zvgs qfje mhwe nbnv"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-
 LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = '/login/'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]  # qo'shimcha
+STATIC_ROOT = BASE_DIR / "staticfiles"

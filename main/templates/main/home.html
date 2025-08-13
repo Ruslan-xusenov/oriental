@@ -1,232 +1,1051 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Hero Section with Particles -->
-<section class="relative bg-gradient-to-br from-blue-900 to-indigo-800 text-white py-20 md:py-32 overflow-hidden">
-    <!-- Particles Background -->
-    <div id="particles-js" class="absolute inset-0 opacity-30"></div>
-    
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-3xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fadeIn">Oriental Universiteti</h1>
-            <p class="text-xl md:text-2xl text-blue-100 opacity-90 mb-8 animate-fadeIn animation-delay-100">
-                Xalqaro standartdagi ta'lim va innovatsion tadqiqotlar markazi
-            </p>
-            <div class="w-40 h-1.5 bg-gradient-to-r from-blue-400 to-indigo-300 mx-auto mb-8 rounded-full animate-slideIn"></div>
-            
-            <!-- In your hero section -->
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#countries" class="scroll-button px-6 py-3 bg-white text-blue-800 font-medium rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300">
-                    O'quv joylari
-                </a>
-                <a href="#news" class="scroll-button px-6 py-3 border-2 border-white text-white font-medium rounded-full hover:bg-white/10 transition-all duration-300">
-                    Yangiliklar
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Animated Waves -->
-    <div class="absolute bottom-0 left-0 right-0 overflow-hidden h-20">
-        <svg class="absolute bottom-0 left-0 w-[200%] animate-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path fill="rgba(255,255,255,0.1)" d="M0,256L48,261.3C96,267,192,277,288,250.7C384,224,480,160,576,160C672,160,768,224,864,218.7C960,213,1056,139,1152,117.3C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+<!-- 3D Animated Hero Section -->
+<section class="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 text-white py-24 md:py-40 overflow-hidden">
+  <!-- Particle.js Background -->
+  <div id="particles-js" class="absolute inset-0 opacity-60"></div>
+  
+  <!-- Animated Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-t from-indigo-900/70 via-purple-900/40 to-transparent"></div>
+  
+  <!-- Floating 3D Shapes -->
+  <div class="shape-overlays">
+    <div class="shape-overlay shape-overlay-1"></div>
+    <div class="shape-overlay shape-overlay-2"></div>
+    <div class="shape-overlay shape-overlay-3"></div>
+  </div>
+
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="mb-8 animate-float">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 14l9-5-9-5-9 5 9 5z" />
+          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
         </svg>
+      </div>
+      
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-text-focus-in">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500">Oriental</span> 
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500">Universiteti</span>
+      </h1>
+      
+      <div class="relative inline-block">
+        <p class="text-xl md:text-2xl text-blue-100 opacity-90 mb-8 animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-1">
+          Xalqaro standartdagi ta'lim va innovatsion tadqiqotlar markazi
+        </p>
+      </div>
+      
+      <div class="w-48 h-1.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mx-auto mb-10 rounded-full animate-scale-in-hor-center"></div>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#countries" class="scroll-button px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 font-semibold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 transform hover:-translate-y-1 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          O'quv joylari
+        </a>
+        <a href="#news" class="scroll-button px-8 py-4 border-2 border-white/50 text-white font-medium rounded-full hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:scale-105 transform hover:-translate-y-1 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+          </svg>
+          Yangiliklar
+        </a>
+      </div>
     </div>
+  </div>
+  
+  <!-- Animated Scroll Down Indicator -->
+  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+    <a href="#countries" class="scroll-button">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-80 hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </a>
+  </div>
 </section>
 
-<!-- Countries Section -->
-<section id="countries" class="py-16 max-w-7xl mx-auto px-6">
-    <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Davlatlararo o'quv joylari</h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Dunyoning 20+ davlatidagi hamkor o'quv muassasalari
-        </p>
+<!-- Glowing Countries Section -->
+<section id="countries" class="py-20 max-w-7xl mx-auto px-6 relative">
+  <!-- Floating background elements -->
+  <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+  <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+  
+  <div class="relative z-10">
+    <div class="text-center mb-20">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 animate-fade-in-up">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Hamkor</span> 
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">Davlatlarimiz</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto animate-fade-in-up animation-delay-100">
+        Dunyoning 20+ davlatidagi hamkor o'quv muassasalari bilan hamkorlik
+      </p>
+      <div class="w-40 h-1.5 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto mt-8 rounded-full animate-scale-in-hor-center animation-delay-200"></div>
     </div>
     
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {% for c in countries %}
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-500 transform hover:-translate-y-2 group">
-            <div class="relative h-48 bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
-                {% if c.flag_url %}
-                    <img src="{{ c.flag_url }}" alt="{{ c.name }}" class="w-32 h-auto object-contain transition duration-500 group-hover:scale-110">
-                {% else %}
-                    <div class="text-5xl text-blue-400">
-                        <i class="fas fa-globe-americas"></i>
-                    </div>
-                {% endif %}
-                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {% for c in countries %}
+      <div class="group relative bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:scale-105">
+        <a href="{% url 'institutions_by_country' c.id %}" class="block">
+          <!-- Country Flag with Glow Effect -->
+          <div class="relative h-60 overflow-hidden">
+            {% if c.flag_url %}
+              <img src="{{ c.flag_url }}" alt="{{ c.name }}" 
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
+            {% else %}
+              <div class="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col items-center justify-center p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 mb-4 group-hover:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="text-gray-500 group-hover:text-gray-700 transition-colors font-medium">Bayroq mavjud emas</span>
+              </div>
+            {% endif %}
+          </div>
+          
+          <!-- Country Info with Floating Effect -->
+          <div class="p-6 relative z-10 bg-white">
+            <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300 mb-2">
+              {{ c.name }}
+            </h3>
+            <div class="flex items-center text-blue-600 font-medium group-hover:text-purple-600 transition-colors">
+              <span>{{ c.institution_count }} ta o'quv joyi</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </div>
-            <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ c.name }}</h3>
-                <div class="flex items-center text-blue-600">
-                    <span class="text-sm font-medium">{{ c.institution_count }} ta o'quv joyi</span>
-                    <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                </div>
+            
+            <!-- Glow Effect on Hover -->
+            <div class="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl blur-md"></div>
             </div>
+          </div>
+        </a>
+        
+        <!-- Floating Badge with Pulse Animation -->
+        <div class="absolute top-4 right-4 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 animate-pulse-slow">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg">
+            {{ forloop.counter }}
+          </span>
         </div>
-        {% endfor %}
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </section>
 
-<!-- News Section -->
-<section id="news" class="bg-gray-50 py-16">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-12">
-            <div class="mb-6 md:mb-0">
-                <h2 class="text-3xl font-bold text-gray-800">So'nggi Yangiliklar</h2>
-                <p class="text-gray-600">Universitet hayotidagi eng muhim voqealar</p>
+<!-- Parallax News Section -->
+<section id="news" class="relative py-24 bg-gray-900 overflow-hidden">
+  <!-- Parallax Background -->
+  <div class="parallax-bg absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center opacity-20"></div>
+  
+  <!-- Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-indigo-900/60 via-purple-900/40 to-gray-900/80"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-16">
+      <div class="mb-8 md:mb-0">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-3">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">So'nggi</span> 
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">Yangiliklar</span>
+        </h2>
+        <p class="text-gray-300">Universitet hayotidagi eng muhim voqealar</p>
+      </div>
+      <a href="{% url 'news_list' %}" class="flex items-center text-blue-300 hover:text-white font-medium transition-colors duration-300 group">
+        Barcha yangiliklar
+        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for item in latest_news %}
+      <div class="group bg-white/5 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/10 hover:border-white/20">
+        {% if item.image %}
+        <div class="relative h-48 overflow-hidden">
+          <img src="{{ item.image.url }}" alt="{{ item.title }}" 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute top-4 right-4 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+            {{ item.category|default:"Yangilik" }}
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        </div>
+        {% elif item.image_url %}
+        <div class="relative h-48 overflow-hidden">
+          <img src="{{ item.image_url }}" alt="{{ item.title }}" 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute top-4 right-4 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+            {{ item.category|default:"Yangilik" }}
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        </div>
+        {% endif %}
+
+        <div class="p-6">
+          <div class="flex items-center text-sm text-gray-300 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {{ item.created_at|date:"d F Y" }}
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-3 group-hover:text-blue-300 transition-colors duration-300">{{ item.title }}</h3>
+          <p class="text-gray-300 mb-4">{{ item.content|truncatewords:20 }}</p>
+          <a href="{% url 'news_detail' item.pk %}" class="inline-flex items-center text-blue-300 hover:text-white font-medium transition-colors duration-300 group">
+            Batafsil
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-center py-12 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 class="mt-6 text-xl font-medium text-white">Hozircha yangiliklar mavjud emas</h3>
+        <p class="mt-2 text-gray-300">Tez orada yangiliklar qo'shiladi</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Animated Stats Section -->
+<section class="py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
+  <!-- Floating Particles -->
+  <div class="particles-2 absolute inset-0 opacity-30"></div>
+  
+  <!-- Floating Shapes -->
+  <div class="absolute -top-20 -left-20 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+  <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">Oriental Universiteti</span> 
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-400">Raqamlarda</span>
+      </h2>
+      <div class="w-48 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mx-auto rounded-full mb-8"></div>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div class="p-6 transform transition hover:scale-110 duration-300 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/20">
+        <div class="text-5xl font-bold mb-3 animate-count text-yellow-400" data-target="25">0</div>
+        <div class="text-lg text-blue-100">Yillik tajriba</div>
+      </div>
+      <div class="p-6 transform transition hover:scale-110 duration-300 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/20">
+        <div class="text-5xl font-bold mb-3 animate-count text-blue-300" data-target="50">0</div>
+        <div class="text-lg text-blue-100">Ta'lim yo'nalishlari</div>
+      </div>
+      <div class="p-6 transform transition hover:scale-110 duration-300 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/20">
+        <div class="text-5xl font-bold mb-3 animate-count text-purple-300" data-target="100">0</div>
+        <div class="text-lg text-blue-100">Professorlar</div>
+      </div>
+      <div class="p-6 transform transition hover:scale-110 duration-300 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/20">
+        <div class="text-5xl font-bold mb-3 animate-count text-pink-300" data-target="20">0</div>
+        <div class="text-lg text-blue-100">Hamkor davlatlar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 bg-white relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">Bitiruvchilarimiz</span> 
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Fikrlari</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Bizning bitiruvchilarimiz dunyoning ko'plab mamlakatlarida muvaffaqiyatli faoliyat olib bormoqda
+      </p>
+      <div class="w-32 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto mt-6 rounded-full"></div>
+    </div>
+    
+    <div class="testimonial-carousel relative">
+      <div class="testimonial-track flex transition-transform duration-500 ease-out">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-slide min-w-full md:min-w-1/2 lg:min-w-1/3 px-4">
+          <div class="bg-gray-50 p-8 rounded-2xl shadow-lg h-full flex flex-col">
+            <div class="flex items-center mb-6">
+              <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Testimonial" class="w-12 h-12 rounded-full object-cover mr-4 flex-shrink-0">
+              <div class="min-w-0">
+                <h4 class="font-bold text-gray-800 truncate">Dilfuza Rahimova</h4>
+                <p class="text-sm text-gray-600 truncate">Germaniya, Berlin</p>
+              </div>
             </div>
-            <a href="{% url 'news_list' %}" class="flex items-center text-blue-600 hover:text-blue-800 font-medium">
-                Barcha yangiliklar
-                <i class="fas fa-arrow-right ml-2"></i>
-            </a>
+            <p class="text-gray-700 italic mb-6 flex-grow">"Oriental Universitetida olgan bilimlarim tufayli Germaniyaning yetakchi IT kompaniyasida ish topdim. O'qituvchilarimizning yuqori malakasi va zamonaviy o'quv dasturlari mening muvaffaqiyatimga katta hissa qo'shdi."</p>
+            <div class="flex text-yellow-400">
+              {% for i in "12345" %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              {% endfor %}
+            </div>
+          </div>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for item in latest_news %}
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-500 transform hover:-translate-y-2">
-                {% if item.image_url %}
-                <div class="relative h-48 overflow-hidden">
-                    <img src="{{ item.image_url }}" alt="{{ item.title }}" class="w-full h-full object-cover transition duration-700 hover:scale-105">
-                    <div class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                        {{ item.category|default:"Yangilik" }}
-                    </div>
-                </div>
-                {% endif %}
-                
-                <div class="p-6">
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <i class="far fa-calendar-alt mr-2"></i>
-                        {{ item.created_at|date:"d F Y" }}
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ item.title }}</h3>
-                    <p class="text-gray-600 mb-4">{{ item.content|truncatewords:20 }}</p>
-                    <a href="{% url 'news_detail' item.pk %}" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
-                        Batafsil
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
+        <!-- Testimonial 2 -->
+        <div class="testimonial-slide min-w-full md:min-w-1/2 lg:min-w-1/3 px-4">
+          <div class="bg-gray-50 p-8 rounded-2xl shadow-lg h-full flex flex-col">
+            <div class="flex items-center mb-6">
+              <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Testimonial" class="w-12 h-12 rounded-full object-cover mr-4 flex-shrink-0">
+              <div class="min-w-0">
+                <h4 class="font-bold text-gray-800 truncate">Javlon Karimov</h4>
+                <p class="text-sm text-gray-600 truncate">AQSh, Kaliforniya</p>
+              </div>
             </div>
-            {% endfor %}
+            <p class="text-gray-700 italic mb-6 flex-grow">"Universitetimizda olgan tajribam mening shaxsiy va professional rivojlanishimga juda katta ta'sir ko'rsatdi. Xalqaro hamkorlik dasturlari tufayli AQShda magistraturaga o'qish imkoniyatini qo'lga kiritdim."</p>
+            <div class="flex text-yellow-400">
+              {% for i in "12345" %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              {% endfor %}
+            </div>
+          </div>
         </div>
-    </div>
-</section>
-
-<!-- Stats Section -->
-<section class="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div class="p-6">
-                <div class="text-4xl font-bold mb-2 animate-count" data-target="25">0</div>
-                <div class="text-lg">Yillik tajriba</div>
+        
+        <!-- Testimonial 3 -->
+        <div class="testimonial-slide min-w-full md:min-w-1/2 lg:min-w-1/3 px-4">
+          <div class="bg-gray-50 p-8 rounded-2xl shadow-lg h-full flex flex-col">
+            <div class="flex items-center mb-6">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Testimonial" class="w-12 h-12 rounded-full object-cover mr-4 flex-shrink-0">
+              <div class="min-w-0">
+                <h4 class="font-bold text-gray-800 truncate">Malika Yusupova</h4>
+                <p class="text-sm text-gray-600 truncate">Janubiy Koreya, Seul</p>
+              </div>
             </div>
-            <div class="p-6">
-                <div class="text-4xl font-bold mb-2 animate-count" data-target="50">0</div>
-                <div class="text-lg">Ta'lim yo'nalishlari</div>
+            <p class="text-gray-700 italic mb-6 flex-grow">"Oriental Universiteti mening hayotimni butunlay o'zgartirdi. Koreya tilini mukammal o'rganganim va bu yerda ishlash imkoniyatini qo'lga kiritganim uchun o'qituvchilarimga minnatdorman. Zamonaviy laboratoriyalar va amaliy mashg'ulotlar juda foydali bo'ldi."</p>
+            <div class="flex text-yellow-400">
+              {% for i in "12345" %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              {% endfor %}
             </div>
-            <div class="p-6">
-                <div class="text-4xl font-bold mb-2 animate-count" data-target="100">0</div>
-                <div class="text-lg">Professorlar</div>
-            </div>
-            <div class="p-6">
-                <div class="text-4xl font-bold mb-2 animate-count" data-target="20">0</div>
-                <div class="text-lg">Hamkor davlatlar</div>
-            </div>
+          </div>
         </div>
+      </div>
+      
+      <!-- Carousel Controls -->
+      <button class="testimonial-prev absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-100 transition-colors duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button class="testimonial-next absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-100 transition-colors duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
+  </div>
 </section>
-
-<!-- JavaScript Libraries -->
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <style>
-    /* Smooth scroll behavior for whole page */
-    html {
-        scroll-behavior: smooth;
-    }
-    
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #3b82f6;
-        border-radius: 5px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #2563eb;
-    }
-    
-    /* Animation for sections */
-    @keyframes fade-in-up {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .animate-fade-in-up {
-        animation: fade-in-up 0.8s ease-out forwards;
-    }
-    
-    /* Button hover effects */
-    .scroll-button {
-        transition: all 0.3s ease;
-    }
-    
-    .scroll-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
+  /* Qo'shimcha stillar */
+  .testimonial-slide {
+    height: auto;
+  }
+  
+  .testimonial-slide > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .min-w-0 {
+    min-width: 0;
+  }
+  
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .flex-grow {
+    flex-grow: 1;
+  }
+  
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for all anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // Add smooth scroll animation
-                window.scrollTo({
-                    top: targetElement.offsetTop - 100, // Adjust offset as needed
-                    behavior: 'smooth'
-                });
-                
-                // Add focus to the target section for accessibility
-                setTimeout(() => {
-                    targetElement.setAttribute('tabindex', '-1');
-                    targetElement.focus();
-                }, 1000);
-            }
-        });
+  const carousel = document.querySelector('.testimonial-track');
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const prevBtn = document.querySelector('.testimonial-prev');
+  const nextBtn = document.querySelector('.testimonial-next');
+  
+  if (carousel && slides.length > 0) {
+    let currentIndex = 0;
+    const slideWidth = slides[0].clientWidth;
+    const totalSlides = slides.length;
+    let autoScrollInterval;
+    const scrollInterval = 5000; // 5 soniyada bir avtoscroll
+    
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
+    
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+      resetAutoScroll();
+    }
+    
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+      resetAutoScroll();
+    }
+    
+    function startAutoScroll() {
+      autoScrollInterval = setInterval(nextSlide, scrollInterval);
+    }
+    
+    function resetAutoScroll() {
+      clearInterval(autoScrollInterval);
+      startAutoScroll();
+    }
+    
+    // Event listeners
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => {
+      clearInterval(autoScrollInterval);
     });
     
-    // Optional: Add scroll animation class when elements come into view
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in-up');
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
+    carousel.addEventListener('mouseleave', () => {
+      startAutoScroll();
     });
+    
+    // Touch events for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      clearInterval(autoScrollInterval);
+    });
+    
+    carousel.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+      startAutoScroll();
+    });
+    
+    function handleSwipe() {
+      const difference = touchStartX - touchEndX;
+      if (difference > 50) { // Swipe left
+        nextSlide();
+      } else if (difference < -50) { // Swipe right
+        prevSlide();
+      }
+    }
+    
+    // Start auto scroll
+    startAutoScroll();
+    
+    // Responsive adjustments
+    function handleResize() {
+      const newSlideWidth = slides[0].clientWidth;
+      carousel.style.transform = `translateX(-${currentIndex * newSlideWidth}px)`;
+    }
+    
+    window.addEventListener('resize', handleResize);
+  }
+});
+</script>
+
+<!-- Call to Action Section -->
+<section class="py-20 bg-gradient-to-r from-indigo-600 to-blue-600 text-white relative overflow-hidden">
+  <!-- Floating Elements -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-white/10 rounded-full animate-float-slow"></div>
+    <div class="absolute top-3/4 left-3/4 w-24 h-24 bg-white/10 rounded-full animate-float-slower"></div>
+    <div class="absolute top-1/3 right-1/4 w-20 h-20 bg-white/10 rounded-full animate-float"></div>
+  </div>
+  
+  <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6">Biz bilan bog'laning</h2>
+    <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+      Oriental Universitetida o'qishni istasangiz yoki qo'shimcha ma'lumot olishni xohlasangiz, quyidagi tugma orqali ariza qoldiring
+    </p>
+    <div class="w-40 h-1.5 bg-gradient-to-r from-blue-300 to-white mx-auto mb-10 rounded-full"></div>
+    
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#" class="px-8 py-4 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 transform hover:-translate-y-1">
+        Ariza qoldirish
+      </a>
+      <a href="#" class="px-8 py-4 border-2 border-white/50 text-white font-medium rounded-full hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:scale-105 transform hover:-translate-y-1">
+        Qo'ng'iroq qilish
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Base Styles */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #4f46e5, #7c3aed);
+  }
+  
+  /* Animation Keyframes */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes textFocusIn {
+    0% {
+      filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      filter: blur(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleInHorCenter {
+    0% {
+      transform: scaleX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  @keyframes float-slow {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  @keyframes float-slower {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white }
+  }
+  
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  
+  @keyframes pulse-slow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Element Animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 1s ease-out forwards;
+  }
+  
+  .animate-text-focus-in {
+    animation: textFocusIn 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  }
+  
+  .animate-scale-in-hor-center {
+    animation: scaleInHorCenter 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .animate-float-slower {
+    animation: float 10s ease-in-out infinite;
+  }
+  
+  .animate-typing {
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+  }
+  
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse-slow 2s infinite;
+  }
+  
+  /* Parallax Effect */
+  .parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  /* Shape Overlays */
+  .shape-overlays {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  .shape-overlay {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.1;
+  }
+  
+  .shape-overlay-1 {
+    background: #3b82f6;
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    right: -200px;
+    animation: float 15s infinite ease-in-out;
+  }
+  
+  .shape-overlay-2 {
+    background: #8b5cf6;
+    width: 800px;
+    height: 800px;
+    bottom: -300px;
+    left: -300px;
+    animation: float 18s infinite ease-in-out;
+  }
+  
+  .shape-overlay-3 {
+    background: #ec4899;
+    width: 400px;
+    height: 400px;
+    top: 50%;
+    left: 30%;
+    animation: float 12s infinite ease-in-out;
+  }
+  
+  /* Testimonial Carousel */
+  .testimonial-carousel {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .testimonial-track {
+    display: flex;
+    transition: transform 0.5s ease-out;
+  }
+  
+  .testimonial-slide {
+    flex: 0 0 auto;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .testimonial-slide {
+      min-width: 100%;
+    }
+  }
+</style>
+
+<!-- JavaScript Libraries -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize Particles.js for hero section
+  if (document.getElementById('particles-js')) {
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "grab"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 140,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
+  }
+  
+  // Initialize Particles.js for stats section
+  if (document.querySelector('.particles-2')) {
+    particlesJS('.particles-2', {
+      "particles": {
+        "number": {
+          "value": 40,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          }
+        },
+        "opacity": {
+          "value": 0.3,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 4,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 4,
+            "size_min": 0.3,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": false
+        },
+        "move": {
+          "enable": true,
+          "speed": 1,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false
+          },
+          "onclick": {
+            "enable": false
+          },
+          "resize": true
+        }
+      },
+      "retina_detect": true
+    });
+  }
+  
+  // Animate counters when stats section is in view
+  const animateCounters = () => {
+    const counters = document.querySelectorAll('.animate-count');
+    const speed = 200;
+    
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / speed;
+      
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(animateCounters, 1);
+      } else {
+        counter.innerText = target;
+      }
+    });
+  };
+  
+  const statsSection = document.querySelector('section.bg-gradient-to-br');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  if (statsSection) {
+    observer.observe(statsSection);
+  }
+  
+  // Testimonial Carousel
+  const carousel = document.querySelector('.testimonial-track');
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const prevBtn = document.querySelector('.testimonial-prev');
+  const nextBtn = document.querySelector('.testimonial-next');
+  
+  if (carousel && slides.length > 0) {
+    let currentIndex = 0;
+    const slideWidth = slides[0].clientWidth;
+    const totalSlides = slides.length;
+    
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
+    
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    });
+    
+    // Auto-advance carousel
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    }, 5000);
+  }
+  
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 100,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+  
+  // GSAP Animations
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Animate elements on scroll
+  gsap.utils.toArray('.animate-fade-in-up').forEach(element => {
+    gsap.from(element, {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      scrollTrigger: {
+        trigger: element,
+        start: "top 80%",
+        toggleActions: "play none none none"
+      }
+    });
+  });
+  
+  // Parallax effect for news section
+  const parallaxBg = document.querySelector('.parallax-bg');
+  if (parallaxBg) {
+    gsap.to(parallaxBg, {
+      yPercent: 20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#news",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+  }
 });
 </script>
 

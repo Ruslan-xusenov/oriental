@@ -6,16 +6,22 @@ from django.conf import settings
 from .models import Country, Institution, News
 from .forms import ContactForm, RegisterForm
 
+from .models import Country, News
+
 def home(request):
     countries = Country.objects.all()
-    latest_news = News.objects.all()[:3]
-    return render(request, "main/home.html", {
-        "countries": countries,
-        "latest_news": latest_news
-    })
 
-def about(request):
-    return render(request, "main/about.html")
+    for c in countries:
+        if c.flag_url and c.flag_url.startswith("http://"):
+            c.flag_url = c.flag_url.replace("http://", "https://")
+
+    latest_news = News.objects.all().order_by('-id')[:3]
+
+    context = {
+        'countries': countries,
+        'latest_news': latest_news,
+    }
+    return render(request, 'main/home.html', context)
 
 def contact(request):
     if request.method == 'POST':
@@ -40,30 +46,6 @@ def contact(request):
     
     return render(request, 'main/contact.html', {'form': form})
 
-def contact_view(request):
-    if request.method == "POST":
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
-
-            send_mail(
-                subject=f"{subject} - {name}",
-                message=f"Yuboruvchi: {name}\nEmail: {email}\n\nXabar:\n{message}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=["sizning_emailingiz@gmail.com"],  # o‘zingizning emailingiz
-                fail_silently=False,
-            )
-
-            messages.success(request, "Xabaringiz muvaffaqiyatli yuborildi!")
-            return redirect("contact")
-    else:
-        form = ContactForm()
-
-    return render(request, "main/contact.html", {"form": form})
-
 def success_page(request):
     return render(request, "main/contact_success.html")
 
@@ -73,13 +55,19 @@ from .models import Institution, Country
 def countries_list(request):
     country_id = request.GET.get('country')
     institutions = Institution.objects.all()
+    country_name = None
+    
     if country_id:
         institutions = institutions.filter(country_id=country_id)
+        country = Country.objects.filter(id=country_id).first()
+        country_name = country.name if country else None
+
     countries = Country.objects.all()
     context = {
         'institutions': institutions,
         'countries': countries,
         'selected_country_id': int(country_id) if country_id else None,
+        'country_name': country_name,
     }
     return render(request, 'main/countries_list.html', context)
 
@@ -90,7 +78,7 @@ def institutions_by_country(request, country_id):
         'country': country,
         'institutions': institutions,
     }
-    return render(request, 'institutions_by_country.html', context)
+    return render(request, 'main/institutions_by_country.html', context) 
 
 def institution_detail(request, pk):
     institution = get_object_or_404(Institution, pk=pk)
@@ -100,15 +88,20 @@ def about(request):
     return render(request, "main/about.html")
 
 def news_list(request):
-    news_items = News.objects.all()
-    return render(request, "main/news_list.html", {"news_items": news_items})
+    latest_news = News.objects.all().order_by('-created_at')
+    for news in latest_news:
+        if news.image_url and news.image_url.startswith("http://"):
+            news.image_url = news.image_url.replace("http://", "https://")
+    return render(request, "main/news_list.html", {"latest_news": latest_news})
 
 def news_detail(request, pk):
     news = get_object_or_404(News, pk=pk)
+    if news.image_url and news.image_url.startswith("http://"):
+        news.image_url = news.image_url.replace("http://", "https://")
     return render(request, "main/news_detail.html", {"news": news})
 
 def logout_view(request):
-    logout(request)  # Foydalanuvchi sessiyasini tozalash
+    logout(request)
     return redirect('home')
 
 def register_view(request):

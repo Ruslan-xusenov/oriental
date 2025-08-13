@@ -1,95 +1,192 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="bg-gradient-to-b from-blue-50 to-white min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Sarlavha qismi -->
-        <header class="mb-12 text-center">
-            <div class="relative inline-block">
-                <h1 class="text-4xl sm:text-5xl font-bold text-gray-800 mb-3 animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                    Davlatlararo o'quv joylari
-                </h1>
-            </div>
-        </header>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Animated header section -->
+    <div class="text-center mb-12 transform transition-all duration-500 hover:scale-105">
+        <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Hamkor Davlatlarimizdagi Ta'lim Muassasalari
+        </h1>
+        <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+            Qo'shni davlatlardagi eng yaxshi ta'lim imkoniyatlari
+        </p>
+    </div>
 
-        <!-- Filtr formasi -->
-        <form method="get" action="{% url 'countries_list' %}" class="bg-white rounded-2xl shadow-xl p-6 mb-12">
-            <div class="flex flex-col sm:flex-row items-start sm:items-end gap-4">
-                <div class="flex-1 w-full">
-                    <label for="country" class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-                        <i class="fas fa-globe-americas mr-2 text-blue-500"></i> Davlatni tanlang:
-                    </label>
-                    <select name="country" id="country" class="block w-full pl-10 pr-10 py-3 text-base border border-gray-300 rounded-xl shadow-sm">
-                        <option value="">Barcha davlatlar</option>
-                        {% for country in countries %}
-                            <option value="{{ country.id }}" {% if country.id|stringformat:"s" == request.GET.country %}selected{% endif %}>
-                                {{ country.name }}
-                            </option>
-                        {% endfor %}
-                    </select>
+    <!-- Advanced filter section with search -->
+    <div class="mb-12 bg-white rounded-2xl shadow-xl p-6 backdrop-blur-sm bg-opacity-80 border border-gray-100">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div class="w-full md:w-auto flex-grow relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
                 </div>
-                <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-xl">
-                    Filtrlash
-                </button>
-                {% if request.GET.country %}
-                    <a href="{% url 'countries_list' %}" class="px-4 py-3 text-gray-600">
-                        <i class="fas fa-times mr-1"></i> Tozalash
-                    </a>
-                {% endif %}
+                <input 
+                    type="text" 
+                    id="country-search"
+                    placeholder="Davlat nomi bo'yicha qidirish..." 
+                    class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    oninput="filterCountries()"
+                >
             </div>
-        </form>
+            <div class="w-full md:w-64">
+                <label for="sort-by" class="block text-sm font-medium text-gray-700 mb-1">Saralash</label>
+                <select 
+                    id="sort-by"
+                    class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-lg"
+                    onchange="sortCountries()"
+                >
+                    <option value="name-asc">Nomi (A-Z)</option>
+                    <option value="name-desc">Nomi (Z-A)</option>
+                    <option value="count-asc">Muassasalar soni (kam)</option>
+                    <option value="count-desc">Muassasalar soni (ko'p)</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
-        <!-- Natijalar -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for inst in institutions %}
-                <!-- Kartochka dizayni -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold">{{ inst.name }}</h3>
-                        <p class="text-gray-600">{{ inst.country.name }}</p>
+    <!-- Countries grid with animation effects -->
+    {% if countries %}
+        <div id="countries-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {% for country in countries %}
+            <div class="country-card group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:z-10" 
+                 data-name="{{ country.name|lower }}"
+                 data-count="{{ country.institution_count }}">
+                <a href="{% url 'institutions_by_country' country.id %}" class="block">
+                    <!-- Flag image with parallax effect container -->
+                    <div class="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden relative h-56">
+                        {% if country.get_flag %}
+                            <img src="{{ country.get_flag }}" alt="{{ country.name }}" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        {% else %}
+                            <div class="w-full h-full bg-gradient-to-r from-blue-50 to-indigo-50 flex flex-col items-center justify-center p-6 text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="text-gray-500 font-medium">Bayroq mavjud emas</span>
+                            </div>
+                        {% endif %}
                     </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                            {{ country.name }}
+                        </h3>
+                        <!-- <div class="mt-4 flex items-center text-sm text-gray-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            <span class="institution-count">{{ country.institution_count }}</span>
+                        </div> -->
+                    </div>
+                </a>
+                <!-- Animated ranking badge -->
+                <div class="absolute top-4 right-4 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md">
+                        {{ forloop.counter }}
+                    </span>
                 </div>
-            {% empty %}
-                <div class="col-span-full text-center py-16">
-                    <p class="text-gray-600">Filtr bo'yicha hech qanday natija topilmadi</p>
-                </div>
+            </div>
             {% endfor %}
         </div>
-
-        <!-- Paginatsiya -->
-        {% if institutions.has_other_pages %}
-        <div class="mt-8">
-            <nav class="flex justify-center">
-                <ul class="flex list-style-none">
-                    {% if institutions.has_previous %}
-                        <li class="mx-1">
-                            <a href="?page={{ institutions.previous_page_number }}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}" 
-                               class="px-3 py-1 rounded-lg border border-gray-300">
-                                &laquo;
-                            </a>
-                        </li>
-                    {% endif %}
-                    
-                    {% for i in institutions.paginator.page_range %}
-                        <li class="mx-1">
-                            <a href="?page={{ i }}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}" 
-                               class="px-3 py-1 rounded-lg {% if institutions.number == i %}bg-blue-600 text-white{% else %}border border-gray-300{% endif %}">
-                                {{ i }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    
-                    {% if institutions.has_next %}
-                        <li class="mx-1">
-                            <a href="?page={{ institutions.next_page_number }}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}" 
-                               class="px-3 py-1 rounded-lg border border-gray-300">
-                                &raquo;
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
+    {% else %}
+        <!-- Enhanced empty state with animation -->
+        <div class="text-center py-16 bg-gray-50 rounded-xl animate-fade-in">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 class="mt-4 text-lg font-medium text-gray-900">Hozircha davlatlar mavjud emas</h3>
+            <p class="mt-2 text-gray-500">Tez orada yangi hamkor davlatlar qo'shiladi.</p>
+            <div class="mt-6 transform transition hover:scale-105 duration-300">
+                <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Yangi davlat qo'shish
+                </a>
+            </div>
         </div>
-        {% endif %}
-    </div>
+    {% endif %}
 </div>
+
+<!-- JavaScript for interactive features -->
+<script>
+    // Filter countries by search input
+    function filterCountries() {
+        const searchValue = document.getElementById('country-search').value.toLowerCase();
+        const countries = document.querySelectorAll('.country-card');
+        
+        countries.forEach(country => {
+            const countryName = country.getAttribute('data-name');
+            if (countryName.includes(searchValue)) {
+                country.style.display = 'block';
+                setTimeout(() => {
+                    country.style.opacity = '1';
+                    country.style.transform = 'translateY(0)';
+                }, 50);
+            } else {
+                country.style.opacity = '0';
+                country.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    country.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+
+    // Sort countries by selected option
+    function sortCountries() {
+        const sortBy = document.getElementById('sort-by').value;
+        const container = document.getElementById('countries-container');
+        const countries = Array.from(document.querySelectorAll('.country-card'));
+        
+        countries.sort((a, b) => {
+            switch(sortBy) {
+                case 'name-asc':
+                    return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
+                case 'name-desc':
+                    return b.getAttribute('data-name').localeCompare(a.getAttribute('data-name'));
+                case 'count-asc':
+                    return parseInt(a.getAttribute('data-count')) - parseInt(b.getAttribute('data-count'));
+                case 'count-desc':
+                    return parseInt(b.getAttribute('data-count')) - parseInt(a.getAttribute('data-count'));
+                default:
+                    return 0;
+            }
+        });
+        
+        // Re-append sorted elements with animation
+        countries.forEach((country, index) => {
+            container.appendChild(country);
+            // Update ranking number
+            country.querySelector('.absolute span').textContent = index + 1;
+        });
+    }
+</script>
+
+<!-- Add this to your base.css or style tag -->
+<style>
+    .country-card {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    .animate-bounce {
+        animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+</style>
 {% endblock %}

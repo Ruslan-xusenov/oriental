@@ -1,121 +1,401 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <!-- Sarlavha va filtrlar -->
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Yangiliklar</h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Bizning so'nggi yangiliklar, tadbirlar va e'lonlar to'plami</p>
+
+<section id="news" class="bg-gray-50 py-16" aria-labelledby="news-heading">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+            <div class="mb-6 md:mb-0">
+                <h2 id="news-heading" class="text-3xl font-bold text-gray-800">So'nggi Yangiliklar</h2>
+                <p class="text-gray-600">Universitet hayotidagi eng muhim voqealar</p>
+            </div>
+            <a href="{% url 'news_list' %}" class="flex items-center text-blue-600 hover:text-blue-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
+                Barcha yangiliklar
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+                <span class="sr-only">Barcha yangiliklarni ko'rish</span>
+            </a>
+        </div>
         
-        <!-- Filtrlar -->
-        <div class="mt-6 flex flex-wrap justify-center gap-3">
-            <button class="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-all">
-                Barchasi
-            </button>
-            {% for category in categories %}
-            <button class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition-all">
-                {{ category.name }}
-            </button>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for item in latest_news %}
+            <article class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-500 transform hover:-translate-y-2 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2" itemscope itemtype="https://schema.org/NewsArticle">
+                {% if item.image %}
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="{{ item.image.url }}" 
+                        alt="{{ item.title }}" 
+                        class="w-full h-full object-cover transition duration-700 hover:scale-105"
+                        loading="lazy"
+                        width="400"
+                        height="240"
+                        itemprop="image"
+                    >
+                    <div class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        {{ item.category|default:"Yangilik" }}
+                    </div>
+                </div>
+                {% elif item.image_url %}
+                <div class="relative h-48 overflow-hidden">
+                    <img 
+                        src="{{ item.image_url }}" 
+                        alt="{{ item.title }}" 
+                        class="w-full h-full object-cover transition duration-700 hover:scale-105"
+                        loading="lazy"
+                        width="400"
+                        height="240"
+                        itemprop="image"
+                    >
+                    <div class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        {{ item.category|default:"Yangilik" }}
+                    </div>
+                </div>
+                {% endif %}
+
+                
+                <div class="p-6" itemprop="articleBody">
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                        </svg>
+                        <time datetime="{{ item.created_at|date:'c' }}" itemprop="datePublished">
+                            {{ item.created_at|date:"d F Y" }}
+                        </time>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3" itemprop="headline">
+                        <a href="{% url 'news_detail' item.pk %}" class="hover:text-blue-600 focus:outline-none" itemprop="url">
+                            {{ item.title }}
+                        </a>
+                    </h3>
+                    <p class="text-gray-600 mb-4" itemprop="description">
+                        {{ item.content|striptags|truncatewords:20 }}
+                    </p>
+                </div>
+            </article>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <p class="text-gray-500">Hozircha yangiliklar mavjud emas</p>
+            </div>
             {% endfor %}
         </div>
     </div>
+</section>
 
-    <!-- Yangiliklar kartalari -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {% for item in news_items %}
-        <article class="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100">
-            <!-- Rasm qismi -->
-            {% if item.image %}
-            <div class="relative h-56 overflow-hidden">
-                <img src="{{ item.image.url }}" alt="{{ item.title }}" 
-                     class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                
-                <!-- Kategoriya yorlig'i -->
-                {% if item.category %}
-                <span class="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full shadow-sm">
-                    {{ item.category.name }}
-                </span>
-                {% endif %}
-                
-                <!-- Sana yorlig'i -->
-                <span class="absolute bottom-4 left-4 px-3 py-1 bg-white/90 text-gray-800 text-xs font-medium rounded-full shadow-sm flex items-center">
-                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    {{ item.created_at|date:"d.m.Y" }}
-                </span>
-            </div>
-            {% endif %}
-            
-            <!-- Kontent qismi -->
-            <div class="p-6 flex flex-col flex-grow">
-                <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition duration-300">
-                    <a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a>
-                </h2>
-                
-                <p class="text-gray-600 mb-4 line-clamp-3 flex-grow">
-                    {{ item.content|striptags|truncatewords:25 }}
-                </p>
-                
-                <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                    <div class="flex items-center">
-                        {% if item.author.avatar %}
-                        <img src="{{ item.author.avatar.url }}" alt="{{ item.author.get_full_name }}" class="w-8 h-8 rounded-full mr-2 object-cover">
-                        {% else %}
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-medium mr-2">
-                            {{ item.author.get_full_name|first|upper }}
-                        </div>
-                        {% endif %}
-                        <span class="text-sm text-gray-600">{{ item.author.get_full_name }}</span>
-                    </div>
-                    
-                    <a href="{% url 'news_detail' item.pk %}" class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800 transition duration-300">
-                        Batafsil
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transform transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </article>
-        {% endfor %}
-    </div>
+{% endblock %}
 
-    <!-- Pagination -->
-    {% if is_paginated %}
-    <div class="mt-12 flex justify-center">
-        <nav class="flex items-center space-x-2">
-            {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition flex items-center">
-                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                Oldingi
-            </a>
-            {% endif %}
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+
+<script src="https://kit.fontawesome.com/{{ FONT_AWESOME_KIT_ID }}.js" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/intersection-observer@0.12.0/intersection-observer.js"></script>
+
+<script>
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (prefersReducedMotion) {
+    const styles = document.createElement('style');
+    styles.textContent = `
+        [class*="animate-"] {
+            animation: none !important;
+            transition: none !important;
+        }
+    `;
+    document.head.appendChild(styles);
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const initParticles = () => {
+        if (document.getElementById('particles-js') && typeof particlesJS === 'function') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { 
+                        value: prefersReducedMotion ? 30 : 80, 
+                        density: { 
+                            enable: true, 
+                            value_area: prefersReducedMotion ? 400 : 800 
+                        } 
+                    },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { 
+                        value: 0.5, 
+                        random: true,
+                        anim: { enable: !prefersReducedMotion }
+                    },
+                    size: { 
+                        value: 3, 
+                        random: true,
+                        anim: { enable: !prefersReducedMotion }
+                    },
+                    line_linked: { 
+                        enable: true, 
+                        distance: 150, 
+                        color: "#ffffff", 
+                        opacity: 0.4, 
+                        width: 1 
+                    },
+                    move: { 
+                        enable: !prefersReducedMotion,
+                        speed: 2, 
+                        direction: "none", 
+                        random: true, 
+                        straight: false, 
+                        out_mode: "out" 
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { 
+                            enable: !prefersReducedMotion, 
+                            mode: "repulse" 
+                        },
+                        onclick: { 
+                            enable: !prefersReducedMotion, 
+                            mode: "push" 
+                        }
+                    }
+                }
+            });
+        }
+    };
+
+    if (!prefersReducedMotion) {
+        const particlesScript = document.createElement('script');
+        particlesScript.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+        particlesScript.onload = initParticles;
+        document.head.appendChild(particlesScript);
+    }
+
+    const smoothScroll = (targetId, offset = 100) => {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = targetPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            setTimeout(() => {
+                targetElement.setAttribute('tabindex', '-1');
+                targetElement.focus();
+                targetElement.removeAttribute('tabindex');
+            }, 1000);
+        }
+    };
+
+    document.body.addEventListener('click', (e) => {
+        if (e.target.closest('a[href^="#"]')) {
+            e.preventDefault();
+            const targetId = e.target.closest('a').getAttribute('href');
+            if (targetId !== '#') {
+                smoothScroll(targetId);
+            }
+        }
+    });
+
+    const animateCounters = () => {
+        const counters = document.querySelectorAll('.animate-count');
+        if (!counters.length) return;
+
+        const duration = 2000;
+        const startTime = performance.now();
+
+        const updateCounters = (timestamp) => {
+            const progress = Math.min((timestamp - startTime) / duration, 1);
             
-            {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-            <span class="px-4 py-2 border border-blue-500 bg-blue-500 text-white rounded-md shadow-sm">
-                {{ num }}
-            </span>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <a href="?page={{ num }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">
-                {{ num }}
-            </a>
-            {% endif %}
-            {% endfor %}
-            
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition flex items-center">
-                Keyingi
-                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
-            {% endif %}
-        </nav>
-    </div>
-    {% endif %}
-</div>
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const start = 0;
+                const current = Math.floor(progress * (target - start) + start);
+                counter.textContent = current.toLocaleString();
+            });
+
+            if (progress < 1) {
+                requestAnimationFrame(updateCounters);
+            }
+        };
+
+        requestAnimationFrame(updateCounters);
+    };
+
+    const initIntersectionObserver = () => {
+        const elementsToObserve = document.querySelectorAll('section, .animate-count');
+        
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                        
+                        if (entry.target.classList.contains('animate-count')) {
+                            animateCounters();
+                        }
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px' 
+            });
+
+            elementsToObserve.forEach(element => {
+                observer.observe(element);
+            });
+        } else {
+            elementsToObserve.forEach(element => {
+                element.classList.add('animate-fade-in-up');
+                if (element.classList.contains('animate-count')) {
+                    animateCounters();
+                }
+            });
+        }
+    };
+
+    initIntersectionObserver();
+});
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Oriental Universiteti",
+    "description": "Xalqaro standartdagi ta'lim va innovatsion tadqiqotlar markazi",
+    "url": "{{ request.build_absolute_uri }}",
+    "logo": "{% static 'images/logo.png' %}",
+    "foundingDate": "1995",
+    "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Uzbekistan"
+    },
+    "sameAs": [
+        "https://facebook.com/orientaluniversity",
+        "https://twitter.com/orientaluni",
+        "https://instagram.com/orientaluniversity"
+    ]
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        scroll-behavior: smooth;
+        --scrollbar-thumb: #3b82f6;
+        --scrollbar-track: #f1f1f1;
+    }
+    
+    @supports (scrollbar-width: thin) {
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+        }
+    }
+    
+    @supports selector(::-webkit-scrollbar) {
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+    
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes slide-in {
+        from {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes wave {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    
+    .animate-fadeIn {
+        animation: fade-in-up 0.8s ease-out forwards;
+    }
+    
+    .animate-slideIn {
+        animation: slide-in 0.6s ease-out forwards;
+    }
+    
+    .animate-wave {
+        animation: wave 10s linear infinite;
+    }
+    
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+    }
+    
+    .focus-visible {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+    }
+    
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+        
+        body {
+            background: white !important;
+            color: black !important;
+        }
+        
+        a::after {
+            content: " (" attr(href) ")";
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+    }
+</style>
 {% endblock %}

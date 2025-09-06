@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ country.name }} - O'quv Joylari</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #3498db;
@@ -11,6 +12,7 @@
             --dark-color: #2c3e50;
             --light-color: #ecf0f1;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
         
         body {
@@ -31,11 +33,25 @@
             margin-bottom: 2rem;
             text-align: center;
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+            transform: rotate(30deg);
         }
         
         h1 {
             margin: 0;
             font-size: 2.5rem;
+            position: relative;
         }
         
         .institutions-list {
@@ -49,14 +65,62 @@
         .institution-card {
             background: white;
             border-radius: 8px;
-            padding: 1.5rem;
+            overflow: hidden;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
         }
         
         .institution-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            background-color: #000;
+            cursor: pointer;
+        }
+        
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: white;
+            opacity: 0.8;
+            transition: var(--transition);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .video-container:hover .video-play-btn {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-container:hover .video-thumbnail {
+            opacity: 0.85;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .institution-name {
@@ -65,15 +129,19 @@
             margin-bottom: 0.5rem;
             text-decoration: none;
             display: block;
+            transition: var(--transition);
+            font-weight: 600;
         }
         
         .institution-name:hover {
+            color: var(--secondary-color);
             text-decoration: underline;
         }
         
         .institution-description {
             color: #555;
             margin-bottom: 1rem;
+            flex-grow: 1;
         }
         
         .advantages {
@@ -81,6 +149,7 @@
             padding: 0.8rem;
             border-radius: 5px;
             border-left: 4px solid var(--secondary-color);
+            margin-top: auto;
         }
         
         .advantages-title {
@@ -97,18 +166,115 @@
         }
         
         .back-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             margin-top: 2rem;
             padding: 0.8rem 1.5rem;
             background-color: var(--dark-color);
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: var(--transition);
         }
         
         .back-button:hover {
             background-color: #1a252f;
+            transform: translateX(-5px);
+        }
+        
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 80%;
+            max-width: 900px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--secondary-color);
+        }
+        
+        .video-iframe-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+        }
+        
+        .video-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        
+        /* Platform badges */
+        .video-platform {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        /* Filter section */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
         
         @media (max-width: 768px) {
@@ -119,6 +285,14 @@
             h1 {
                 font-size: 2rem;
             }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -127,22 +301,153 @@
         <h1>{{ country.name }}dagi O'quv Joylari</h1>
     </header>
 
+    <!-- Filtrlar bo'limi -->
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">Barchasi</button>
+        <button class="filter-btn" data-filter="video">Videolari bor</button>
+        <button class="filter-btn" data-filter="popular">Mashhurlari</button>
+    </div>
+
     <ul class="institutions-list">
         {% for inst in institutions %}
-            <li class="institution-card">
-                <a href="{% url 'institution_detail' inst.pk %}" class="institution-name">{{ inst.name }}</a>
-                <div class="institution-description">{{ inst.description|linebreaks }}</div>
-                {% if inst.advantages %}
-                    <div class="advantages">
-                        <span class="advantages-title">Afzalliklari:</span> {{ inst.advantages }}
+            <li class="institution-card" data-has-video="{{ inst.video_url|yesno:'true,false' }}" data-popular="{{ inst.is_popular|yesno:'true,false' }}">
+                <!-- Video qismi -->
+                {% if inst.video_url %}
+                <div class="video-container" data-video-url="{{ inst.video_url }}">
+                    <img src="{{ inst.thumbnail_url|default:'https://placehold.co/600x400/3498db/white?text=Video+Ko%27rsatgich' }}" 
+                        alt="{{ inst.name }} video" class="video-thumbnail">
+                    <div class="video-play-btn">
+                        <i class="fas fa-play-circle"></i>
                     </div>
+                    <div class="video-platform">
+                        <i class="fab fa-{{ inst.video_platform }}"></i>
+                        <span>{{ inst.video_platform|title }}</span>
+                    </div>
+                </div>
                 {% endif %}
+                
+                <div class="card-content">
+                    <a href="{% url 'institution_detail' inst.pk %}" class="institution-name">{{ inst.name }}</a>
+                    <div class="institution-description">{{ inst.description|linebreaks }}</div>
+                    {% if inst.advantages %}
+                        <div class="advantages">
+                            <span class="advantages-title">Afzalliklari:</span> {{ inst.advantages }}
+                        </div>
+                    {% endif %}
+                </div>
             </li>
         {% empty %}
             <li class="empty-message">Hech qanday o'quv joyi topilmadi.</li>
         {% endfor %}
     </ul>
 
-    <a href="{% url 'countries_list' %}" class="back-button">Davlatlar Ro'yxatiga Qaytish</a>
+    <!-- Video modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="video-iframe-container">
+                <iframe class="video-iframe" id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'countries_list' %}" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;Davlatlar Ro'yxatiga Qaytish
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Video modal funksionalligi
+            const videoContainers = document.querySelectorAll('.video-container');
+            const videoModal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('videoFrame');
+            const closeModal = document.getElementById('closeModal');
+            
+            videoContainers.forEach(container => {
+                container.addEventListener('click', function() {
+                    const videoUrl = this.getAttribute('data-video-url');
+                    if (videoUrl) {
+                        // YouTube, Vimeo va boshqa platformalar uchun embed URL yaratish
+                        let embedUrl;
+                        
+                        if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                            let videoId;
+                            if (videoUrl.includes('youtube.com')) {
+                                videoId = videoUrl.split('v=')[1];
+                                const ampersandPosition = videoId.indexOf('&');
+                                if (ampersandPosition !== -1) {
+                                    videoId = videoId.substring(0, ampersandPosition);
+                                }
+                            } else {
+                                videoId = videoUrl.split('/').pop();
+                            }
+                            embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                        } 
+                        else if (videoUrl.includes('vimeo.com')) {
+                            const videoId = videoUrl.split('/').pop();
+                            embedUrl = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+                        }
+                        else {
+                            // Boshqa platformalar uchun to'g'ridan-to'g'ri URL
+                            embedUrl = videoUrl;
+                        }
+                        
+                        videoFrame.src = embedUrl;
+                        videoModal.classList.add('active');
+                        document.body.style.overflow = 'hidden'; // Scroll ni to'xtatish
+                    }
+                });
+            });
+            
+            // Modalni yopish
+            closeModal.addEventListener('click', function() {
+                videoModal.classList.remove('active');
+                videoFrame.src = '';
+                document.body.style.overflow = 'auto'; // Scroll ni qayta yoqish
+            });
+            
+            // Tashqariga bosganda modalni yopish
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    closeModal.click();
+                }
+            });
+            
+            // Filtrlash funksionalligi
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const institutionCards = document.querySelectorAll('.institution-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Faol tugmani yangilash
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    institutionCards.forEach(card => {
+                        if (filter === 'all') {
+                            card.style.display = 'flex';
+                        } 
+                        else if (filter === 'video') {
+                            if (card.getAttribute('data-has-video') === 'true') {
+                                card.style.display = 'flex';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                        else if (filter === 'popular') {
+                            if (card.getAttribute('data-popular') === 'true') {
+                                card.style.display = 'flex';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

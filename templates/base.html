@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oriental Universiteti - Ta'limda yangi bosqich</title>
+    <title>Origen Consulting - Ta'limda yangi bosqich</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -69,9 +69,9 @@
     <header class="header-bg text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
             <div class="flex items-center space-x-2">
-                <img src="{% static 'images/logo.jpg' %}" alt="Oriental Universiteti" class="w-10 h-10 rounded-full object-cover">                
+                <img src="{% static 'images/origen.jpg' %}" alt="Origen Consulting" class="w-10 h-10 rounded-full object-cover">                
                 <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-200">
-                    Oriental Universiteti
+                    Origen Consulting
                 </h1>
             </div>
             
@@ -120,13 +120,11 @@
                 {% endif %}
             </nav>
             
-            <!-- Mobile menu button -->
             <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
         
-        <!-- Mobile menu -->
         <div class="md:hidden hidden bg-blue-800 px-4 py-2" id="mobile-menu">
             <a href="{% url 'home' %}" class="block py-2 hover:text-yellow-400"><i class="fas fa-home mr-2"></i> Bosh sahifa</a>
             <a href="{% url 'about' %}" class="block py-2 hover:text-yellow-400"><i class="fas fa-info-circle mr-2"></i> Biz haqimizda</a>
@@ -160,13 +158,11 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-yellow-400">Oriental Universiteti</h3>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-400">Origen Consulting</h3>
                     <p class="text-gray-300">Ta'limda yangi bosqich. Kelajagingizni biz bilan quring!</p>
                     <div class="mt-4 flex space-x-4">
-                        <a href="#" class="text-gray-300 hover:text-yellow-400"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-300 hover:text-yellow-400"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-300 hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-300 hover:text-yellow-400"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.instagram.com/origen_consulting/" class="text-gray-300 hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/Oregin_Consult" class="text-gray-300 hover:text-yellow-400"><i class="fab fa-telegram"></i></a>
                     </div>
                 </div>
                 
@@ -185,7 +181,6 @@
                     <ul class="space-y-2 text-gray-300">
                         <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-2 text-yellow-400"></i> Toshkent shahar, Universitet ko'chasi, 12</li>
                         <li class="flex items-center"><i class="fas fa-phone-alt mr-2 text-yellow-400"></i> +998 71 123 45 67</li>
-                        <li class="flex items-center"><i class="fas fa-envelope mr-2 text-yellow-400"></i> info@oriental.uz</li>
                     </ul>
                 </div>
                 
@@ -202,13 +197,12 @@
             </div>
             
             <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-                <p>© 2025 Oriental Universiteti. Barcha huquqlar himoyalangan.</p>
+                <p>© 2025 Origen Consulting. Barcha huquqlar himoyalangan.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
@@ -223,7 +217,6 @@
             }
         });
         
-        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();

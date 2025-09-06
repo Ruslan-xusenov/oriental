@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)%irus#8m9(2-qw$f2rq^r05bx=1p(ox_q1x)f5u%@js$ems&t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["*"]
 
 # settings.py ga qo'shimcha sozlamalar
 CORS_ALLOWED_ORIGINS = [
